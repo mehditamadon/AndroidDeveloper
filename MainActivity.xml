@@ -1,0 +1,101 @@
+package com.example.firstjava;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+    public class MainActivity extends AppCompatActivity {
+        final String FILE_NAME = "ccccs325_preference";
+        final String MY_KEY = "my_data";
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            SharedPreferences sf = getSharedPreferences(FILE_NAME,MODE_PRIVATE);
+            ConstraintLayout layout = findViewById(R.id.main_layout);
+            Button btn = findViewById(R.id.button);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+               Intent intent = new Intent(getBaseContext(), SettingActivty.class);
+                    //Intent intent = new Intent();
+               // intent.putExtra(MY_KEY, "Hello Ben");
+               // intent.setAction(Intent.ACTION_SEND);
+                 startActivity(intent);
+                }
+            });
+
+
+
+            layout.setBackground(getResources().getDrawable(R.drawable.tiger));
+            Spinner spinner = findViewById(R.id.spinner);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (adapterView.getSelectedItem().equals("Tiger")) {
+                        layout.setBackgroundResource(R.drawable.tiger);
+                        //layout.setBackground(getResources().getDrawable(R.drawable.tiger));
+                    } else {
+                        layout.setBackground(getResources().getDrawable(R.drawable.lion1));
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+
+ //           String s = sf.getString(MY_KEY, "test");
+ //           Toast.makeText(this,sf.getString(MY_KEY,  "No Hello For Ben"), Toast.LENGTH_LONG).show();
+//            Log.d("StateCheck","onCreate");
+
+        }
+        @Override
+        protected void onStart(){
+            super.onStart();
+            Log.d("Testing","onStart");
+        }
+        @Override
+        protected void onResume(){
+            super.onResume();
+            Log.d("Testing","onResume");
+
+        }
+        @Override
+        protected void onPause(){
+            super.onPause();
+            Log.d("Testing","onPause");
+
+        }
+
+        @Override
+        protected void onStop() {
+            super.onStop();
+            Log.d("Testing","onStop");
+
+        }
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+
+            SharedPreferences sf = this.getSharedPreferences(FILE_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor ed = sf.edit();
+            ed.putString(MY_KEY, "Hello Ben");
+            ed.commit();
+            Log.d("Testing","onDestroy");
+
+        }
+
+    }
+
